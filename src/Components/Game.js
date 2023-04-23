@@ -318,7 +318,7 @@ export default function Board(src) {
         return () => clearTimeout(timer);
     }, [modalIndex, excludeArray, gameMode, handleCpuRandom, status, scenarious, pickIndex, cpuActive, levelRef]);
 
-    // used for switching off modalQuotes
+    // used for switching off modalQuotes component
     useEffect(() => {
         const timer = setTimeout(() => {
             if (modalIndex === 5) {

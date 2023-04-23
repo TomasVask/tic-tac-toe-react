@@ -1,0 +1,60 @@
+.main {
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.xZeroLogos {
+    margin-top: 7em;
+    margin-bottom: 3.25em;
+}
+
+.xZeroLogos img {
+    width: 9em;
+}
+
+.notFound {
+    font-size: 2.5em;
+    color: var(--light-grey-bg);
+}
+
+.return {
+    color: var(--light-grey-bg);
+}
+
+.button {
+
+    font-size: 1.15em;
+    font-weight: 700;
+    width: 15rem;
+    height: 3.1875rem;
+    border-radius: 10px;
+    border: none;
+    display: block;
+    color: var(--dark-grey-bg);
+    letter-spacing: 1.25px;
+    background-color: var(--x-color);
+    box-shadow: inset 0px -6px 0px #118C87;
+    margin-top: 3.25em;
+}
+
+.button:hover {
+    background: var(--x-color-light);
+}
+
+
+/* ********************************************************/
+/* **********************RESPONSIVE************************/
+/* ****************************************************** */
+
+/* below 576px */
+
+@media(max-width: 36em) {
+    .main {
+        padding: 3em;
+    }
+}

@@ -1,0 +1,11 @@
+issues: 
+  2) auto quote timeris issijungimo
+  3) Redux
+  4) immer
+  5) error handlignas
+    - API fetchinimo errorai - ka dayrti?
+    - error boundaries
+- ismesti testines quotes trumpesnes negu 15 simboliu.
+
+
+

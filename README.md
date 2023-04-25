@@ -33,7 +33,7 @@ Short description:
 
 ### Links
 
-- Live Site URL: [](https://tic-tac-toe-react.herokuapp.com/)
+- Live Site URL: [Tic Tac Toe React](https://tic-tac-toe-react.herokuapp.com/)
 
 ## My process
 

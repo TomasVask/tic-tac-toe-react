@@ -15,9 +15,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "PORT=3000 react-scripts start",
+    "start": "NODE_ENV=production node index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "client": "react-scripts start",
     "server": "nodemon server",
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
@@ -46,6 +47,5 @@
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-jsdoc": "^40.0.1",
     "eslint-plugin-react": "^7.32.2"
-  },
-  "proxy": "http://localhost:5000"
+  }
 }

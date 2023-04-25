@@ -14,22 +14,22 @@ app.get("/api/random", async (req, res, next) => {
     }
 })
 
-// if (process.env.NODE_ENV === "production") {
-//     // Express will serve up production assets
-//     app.use(express.static("build"));
+if (process.env.NODE_ENV === "production") {
+    // Express will serve up production assets
+    app.use(express.static("build"));
 
-//     // Express will serve up the front-end index.html file if it doesn't recognize the route
-//     app.get("*", (req, res) =>
-//         res.sendFile(path.resolve("build", "index.html"))
-//     );
-// }
+    // Express will serve up the front-end index.html file if it doesn't recognize the route
+    app.get("*", (req, res) =>
+        res.sendFile(path.resolve("build", "index.html"))
+    );
+}
 
-// if (process.env.NODE_ENV === "dev") {
-//     // Express will serve up production assets
-//     app.use(express.static("public"));
-//     app.get("*", (req, res) =>
-//         res.sendFile(path.resolve("public", "index.html"))
-//     );
-// }
+if (process.env.NODE_ENV === "dev") {
+    // Express will serve up production assets
+    app.use(express.static("public"));
+    app.get("*", (req, res) =>
+        res.sendFile(path.resolve("public", "index.html"))
+    );
+}
 
 app.listen(PORT, () => { console.log("Server started") })

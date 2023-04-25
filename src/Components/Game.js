@@ -333,6 +333,7 @@ export default function Board(src) {
             <div className={styles.mainContainer}>
                 <div className={styles.xZeroLogos}>
                     <img src="/starter-code/assets/logo.svg" alt="" />
+                    {gameMode === "vsCPU" && <div className={styles.level}>{levelRef.current === "beginner" ? "Beginner" : levelRef.current === "intermediate" ? "Intermediate" : "Advanced"}</div>}
                 </div>
                 <div className={styles.turnDisplay}>
                     <img src={src} alt="" />

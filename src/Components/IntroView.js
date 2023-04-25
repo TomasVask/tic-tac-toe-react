@@ -25,9 +25,9 @@ function ButtonCPU({ disabled, onChange, value }) {
                 value={value}
             >
                 <option>NEW GAME VS CPU</option>
-                <option key="beginner" value="beginner">Choose difficulty - BEGINNER</option>
-                <option key="intermediate" value="intermediate" >Choose difficulty - INTERMEDIATE</option>
-                <option key="advanced" value="advanced">Choose difficulty - ADVANCED</option>
+                <option key="beginner" value="beginner">Pick your level - BEGINNER</option>
+                <option key="intermediate" value="intermediate" >Pick your level - INTERMEDIATE</option>
+                <option key="advanced" value="advanced">Pick your level - ADVANCED</option>
             </select>
         </div>
     )

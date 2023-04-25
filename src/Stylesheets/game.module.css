@@ -47,6 +47,10 @@ body {
     align-self: center;
 }
 
+.level {
+    color: var(--light-grey-bg);
+}
+
 .turnDisplay {
     grid-area: turnDisplay;
     width: 8.75rem;

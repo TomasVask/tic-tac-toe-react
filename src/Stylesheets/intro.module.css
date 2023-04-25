@@ -223,6 +223,12 @@ p:nth-of-type(2) {
         letter-spacing: 1px;
     }
 
+    .difficulty {
+        font-size: 1em;
+        height: 3.5em;
+        letter-spacing: 1px;
+    }
+
     .pickMarkBox {
         margin-top: 1.4em;
     }

@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "../Stylesheets/404.module.css";
+import styles from "./404.module.css";
 import { useNavigate } from 'react-router-dom';
 
-export default function PageNotFound() {
+const PageNotFound = () => {
     const navigate = useNavigate();
     return (
         <div className={styles.main}>
@@ -19,4 +19,6 @@ export default function PageNotFound() {
             >Start a new game</button>
         </div>
     )
-}
+};
+
+export default PageNotFound;

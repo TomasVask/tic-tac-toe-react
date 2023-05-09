@@ -1,8 +1,12 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useLocation } from "react-router-dom";
-import { ModalXWin, ModalZeroWin, ModalRestart, ModalTies, ModalQuotes } from "./Modals";
+import { ModalXWin, ModalZeroWin, ModalTies } from "../modals/Modals";
+import ModalQuotes from '../modals/ModalQuotes';
+import ModalRestart from '../modals/ModalRestart';
+import Counter from './Counter';
+import Button from './MainButton';
 import { useNavigate } from 'react-router-dom';
-import styles from "../Stylesheets/game.module.css"
+import styles from "./game.module.css"
 
 const arr = {
     empty: `${styles.grid}`,
@@ -14,17 +18,6 @@ const arr = {
     zeroWin: `${styles.grid} ${styles.zeroWin}`
 };
 
-function Button({ onClick, onEnter, onLeave, classTitle }) {
-    return (
-        <button
-            className={classTitle}
-            onPointerEnter={onEnter}
-            onPointerLeave={onLeave}
-            onClick={onClick}
-        ></button>
-    )
-};
-
 function getSessionStorage(key, defValue) {
     let result = sessionStorage.getItem(key);
     if (result === null) {
@@ -33,44 +26,7 @@ function getSessionStorage(key, defValue) {
     return JSON.parse(result);
 };
 
-function Counter({ classTitle, scoreX, scoreZero, scoreTies }) {
-    const { state } = useLocation();
-    const { pickIndex } = state || {};
-    const { gameMode } = state || {};
-    function handleRoleX() {
-        if (pickIndex === "x") {
-            return gameMode === "vsCPU" ? "(YOU)" : "(P1)";
-        } else if (pickIndex === "zero") {
-            return gameMode === "vsCPU" ? "(CPU)" : "(P2)";
-        };
-    };
-
-    function handleRoleZero() {
-        if (pickIndex === "x") {
-            return gameMode === "vsCPU" ? "(CPU)" : "(P2)";
-        } else if (pickIndex === "zero") {
-            return gameMode === "vsCPU" ? "(YOU)" : "(P1)";
-        };
-    };
-
-    return (
-        <div className={classTitle}>
-            <div>
-                <span>
-                    {classTitle === styles.xCounter ? "X " : classTitle === styles.zeroCounter ? "0 " : "TIES"}
-                </span>
-                <span>
-                    {classTitle === styles.xCounter ? handleRoleX() : classTitle === styles.zeroCounter ? handleRoleZero() : ""}
-                </span>
-            </div>
-            <p >
-                {classTitle === styles.xCounter ? scoreX : classTitle === styles.zeroCounter ? scoreZero : scoreTies}
-            </p>
-        </div >
-    )
-};
-
-export default function Board(src) {
+const Board = (src) => {
     const initialStatus = Array(9).fill(arr.empty);
     const [status, setStatus] = useState(initialStatus);
     const [score, setScore] = useState({ x: getSessionStorage("saveX", 0), ties: getSessionStorage("saveTies", 0), zero: getSessionStorage("saveZero", 0) });
@@ -342,15 +298,9 @@ export default function Board(src) {
                 <form onSubmit={(e) => { e.preventDefault(); setModalIndex(4) }} className={styles.restart} action="" >
                     <button className={styles.restart}><img src="/starter-code/assets/icon-restart.svg" alt="" /></button>
                 </form>
-                <Button classTitle={status[0]} onClick={() => handleClick(0)} onEnter={() => handleIn(0)} onLeave={() => handleOut(0)} />
-                <Button classTitle={status[1]} onClick={() => handleClick(1)} onEnter={() => handleIn(1)} onLeave={() => handleOut(1)} />
-                <Button classTitle={status[2]} onClick={() => handleClick(2)} onEnter={() => handleIn(2)} onLeave={() => handleOut(2)} />
-                <Button classTitle={status[3]} onClick={() => handleClick(3)} onEnter={() => handleIn(3)} onLeave={() => handleOut(3)} />
-                <Button classTitle={status[4]} onClick={() => handleClick(4)} onEnter={() => handleIn(4)} onLeave={() => handleOut(4)} />
-                <Button classTitle={status[5]} onClick={() => handleClick(5)} onEnter={() => handleIn(5)} onLeave={() => handleOut(5)} />
-                <Button classTitle={status[6]} onClick={() => handleClick(6)} onEnter={() => handleIn(6)} onLeave={() => handleOut(6)} />
-                <Button classTitle={status[7]} onClick={() => handleClick(7)} onEnter={() => handleIn(7)} onLeave={() => handleOut(7)} />
-                <Button classTitle={status[8]} onClick={() => handleClick(8)} onEnter={() => handleIn(8)} onLeave={() => handleOut(8)} />
+                {initialStatus.map((item, index) =>
+                    <Button key={index} classTitle={status[index]} onClick={() => handleClick(index)} onEnter={() => handleIn(index)} onLeave={() => handleOut(index)} />
+                )}
                 <Counter classTitle={styles.xCounter} scoreX={score.x} />
                 <Counter classTitle={styles.tiesCounter} scoreTies={score.ties} />
                 <Counter classTitle={styles.zeroCounter} scoreZero={score.zero} />
@@ -363,3 +313,5 @@ export default function Board(src) {
         </>
     );
 };
+
+export default Board;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom";
-import IntroView from './Components/IntroView';
-import Board from "./Components/Game";
+import IntroView from './Components/introview/IntroView';
+import Board from "./Components/game/Game";
 import PageNotFound from './Components/PageNotFound';
 
-export default function App() {
+const App = () => {
   return (
     <Routes>
       <Route path="/" element={<IntroView />}></Route>
@@ -12,4 +12,6 @@ export default function App() {
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   )
-}
+};
+
+export default App;

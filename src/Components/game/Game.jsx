@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useLocation } from "react-router-dom";
-import { ModalXWin, ModalZeroWin, ModalTies } from "../modals/Modals";
+import GameModal from "../modals/Modals";
 import ModalQuotes from '../modals/ModalQuotes';
 import ModalRestart from '../modals/ModalRestart';
 import Counter from './Counter';
@@ -130,11 +130,6 @@ const Board = (src) => {
         };
     }, [nextMove, scenarious, score]);
 
-    function handleQuit(e) {
-        e.preventDefault();
-        navigate("/");
-        sessionStorage.clear();
-    };
 
     function handleNextRound(e) {
         e.preventDefault();
@@ -148,6 +143,23 @@ const Board = (src) => {
         };
         cpuStoppedRef.current = false;
     };
+
+    function handleIndexX() {
+        if (gameMode === "vsPlayer") {
+            return pickIndex === "x" ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!"
+        } else if (gameMode === "vsCPU") {
+            return pickIndex === "x" ? "YOU WON!" : "OH NO, YOU LOST..."
+        };
+    };
+
+    function handleIndexZero() {
+        if (gameMode === "vsPlayer") {
+            return pickIndex === "zero" ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!"
+        } else if (gameMode === "vsCPU") {
+            return pickIndex === "zero" ? "YOU WON!" : "OH NO, YOU LOST..."
+        };
+    };
+
 
     // used for preserving scores when refreshing page
     useEffect(() => {
@@ -305,10 +317,28 @@ const Board = (src) => {
                 <Counter classTitle={styles.tiesCounter} scoreTies={score.ties} />
                 <Counter classTitle={styles.zeroCounter} scoreZero={score.zero} />
             </div>
-            {modalIndex === 1 && <ModalXWin onGameEnd={handleQuit} nextRound={handleNextRound} />}
-            {modalIndex === 2 && <ModalZeroWin onGameEnd={handleQuit} nextRound={handleNextRound} />}
-            {modalIndex === 3 && <ModalTies onGameEnd={handleQuit} nextRound={handleNextRound} />}
-            {modalIndex === 4 && <ModalRestart onGameEnd={handleQuit} onShow={(e) => { e.preventDefault(); setModalIndex(0) }} />}
+            {modalIndex === 1 && <GameModal
+                nextRound={handleNextRound}
+                mark="/starter-code/assets/icon-x.svg"
+                textColor={styles.winnerTextX}
+                handleIndex={handleIndexX()}
+                roundTied={false}
+            />}
+            {modalIndex === 2 && <GameModal
+                nextRound={handleNextRound}
+                mark="/starter-code/assets/icon-o.svg"
+                textColor={styles.winnerTextZero}
+                handleIndex={handleIndexZero()}
+                roundTied={false}
+            />}
+            {modalIndex === 3 && <GameModal
+                nextRound={handleNextRound}
+                textColor={styles.roundTiedText}
+                roundTied={true}
+            />}
+            {modalIndex === 4 && <ModalRestart
+                onShow={(e) => { e.preventDefault(); setModalIndex(0) }}
+            />}
             {modalIndex === 5 && <ModalQuotes onClick={() => setModalIndex(0)} />}
         </>
     );

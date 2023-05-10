@@ -160,6 +160,18 @@ body {
     margin: 0 auto;
 }
 
+.winnerTextZero {
+    color: var(--zero-color);
+}
+
+.winnerTextX {
+    color: var(--x-color);
+}
+
+.roundTiedText {
+    color: var(--light-grey-bg);
+}
+
 /* *************************************************************** */
 /* Using classes for the main game buttons to change the mark icons*/
 .normal {

@@ -42,20 +42,8 @@
     margin-left: 0.75rem;
 }
 
-.winnerTextZero {
-    color: var(--zero-color);
-}
-
-.winnerTextX {
-    color: var(--x-color);
-}
-
 .roundTied {
     margin-top: 2.2em
-}
-
-.roundTiedText {
-    color: var(--light-grey-bg);
 }
 
 .quit,
@@ -79,9 +67,7 @@
     background: var(--grey-hover-bg);
 }
 
-.nextTies,
-.nextZero,
-.nextX,
+.next,
 .restartConfirm {
     width: 9.125em;
     height: 3.25em;
@@ -95,10 +81,12 @@
     margin: 0 0.5em;
 }
 
-.nextTies:hover,
-.nextZero:hover,
-.nextX:hover {
+.next:hover {
     background: var(--zero-color-light);
+}
+
+.roundTiedText {
+    color: var(--light-grey-bg);
 }
 
 .buttonOptions {

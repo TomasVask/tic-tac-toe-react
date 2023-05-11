@@ -11,6 +11,28 @@ const IntroView = () => {
     const [pickIndex, setPickIndex] = useState("");
     const levelRef = useRef("")
     const navigate = useNavigate();
+
+    const handleXSelect = () => {
+        setPickIndex('x');
+        setIsDisabled(false);
+    };
+
+    const handleZeroSelect = () => {
+        setPickIndex('zero');
+        setIsDisabled(false);
+    };
+
+    const handleMultipSelect = (e) => {
+        e.preventDefault();
+        navigate("/game", { state: { gameMode: 'vsPlayer', pickIndex } });
+    };
+
+    const handleCpuSelect = (e) => {
+        e.preventDefault();
+        levelRef.current = e.target.value;
+        navigate("/game", { state: { gameMode: 'vsCPU', pickIndex, levelRef } })
+    };
+
     return (
         <div className={styles.mainContainer}>
             <form>
@@ -29,10 +51,7 @@ const IntroView = () => {
                             classLabel={styles.player1}
                             markId={id + 'x'}
                             isActive={pickIndex === 'x'}
-                            onClick={() => {
-                                setPickIndex('x');
-                                setIsDisabled(false);
-                            }}
+                            onClick={handleXSelect}
                         />
                         <ButtonMark
                             classInput="P2"
@@ -40,32 +59,20 @@ const IntroView = () => {
                             classLabel={styles.player2}
                             markId={id + 'zero'}
                             isActive={pickIndex === 'zero'}
-                            onClick={() => {
-                                setPickIndex('zero');
-                                setIsDisabled(false);
-                            }}
+                            onClick={handleZeroSelect}
                         />
                     </div>
                     <p>REMEMBER: X GOES FIRST</p>
                 </div>
                 <ButtonMultiplayer
-                    value="NEW GAME VS PLAYER"
                     className={`${styles.gameMode} ${styles.newGameVsPlayer}`}
                     disabled={isDisabled}
-                    onClick={(e) => {
-                        e.preventDefault()
-                        navigate("/game", { state: { gameMode: 'vsPlayer', pickIndex } });
-                    }}
+                    onClick={handleMultipSelect}
                 />
                 <ButtonCPU
                     classInput={styles.difficulty}
                     disabled={isDisabled}
-                    onChange={(e) => {
-                        e.preventDefault()
-                        // setLevel(e.target.value)
-                        levelRef.current = e.target.value
-                        navigate("/game", { state: { gameMode: 'vsCPU', pickIndex, levelRef } })
-                    }}
+                    onChange={handleCpuSelect}
                     value={levelRef}
                 />
             </form >

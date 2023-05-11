@@ -59,7 +59,7 @@ const Board = (src) => {
         nextMove % 2 === 1 ? src = "/starter-code/assets/icon-x-grey.svg" : src = "/starter-code/assets/icon-o-grey.svg";
     };
 
-    function handleIn(i) {
+    const handleIn = (i) => {
         if ((gameMode === "vsCPU" && isInactiveRef.current) || nStat[i] === arr.zeroWin || nStat[i] === arr.xWin || nStat[i] === arr.clickX || nStat[i] === arr.clickZero) {
             return;
         };
@@ -71,7 +71,7 @@ const Board = (src) => {
         setStatus(nStat);
     };
 
-    function handleOut(i) {
+    const handleOut = (i) => {
         if ((gameMode === "vsCPU" && isInactiveRef.current) || nStat[i] === arr.zeroWin || nStat[i] === arr.xWin || nStat[i] === arr.clickX || nStat[i] === arr.clickZero) {
             return;
         };
@@ -79,7 +79,7 @@ const Board = (src) => {
         setStatus(nStat);
     };
 
-    function handleClick(i) {
+    const handleClick = (i) => {
         if ((gameMode === "vsCPU" && isInactiveRef.current) || nStat[i] === arr.zeroWin || nStat[i] === arr.xWin || nStat[i] === arr.clickX || nStat[i] === arr.clickZero) {
             return;
         };
@@ -107,31 +107,41 @@ const Board = (src) => {
                 };
             };
             if (status[A] === arr.clickX && status[B] === status[A] && status[C] === status[A]) {
-                win(arr.xWin);
-                setScore({
-                    ...score,
-                    x: score.x + 1
-                });
-                setModalIndex(1);
-            } else if (status[A] === arr.clickZero && status[B] === status[A] && status[C] === status[A]) {
-                win(arr.zeroWin);
-                setScore({
-                    ...score,
-                    zero: score.zero + 1
-                });
-                setModalIndex(2);
-            } else if (nextMove === 8 && !status.includes(arr.xWin) && !status.includes(arr.zeroWin)) {
-                setScore({
-                    ...score,
-                    ties: score.ties + 1
-                });
-                setModalIndex(3);
+                const xWin = () => {
+                    win(arr.xWin);
+                    setScore({
+                        ...score,
+                        x: score.x + 1
+                    });
+                    setModalIndex(1)
+                };
+                return xWin();
+            };
+            if (status[A] === arr.clickZero && status[B] === status[A] && status[C] === status[A]) {
+                const zeroWin = () => {
+                    win(arr.zeroWin);
+                    setScore({
+                        ...score,
+                        zero: score.zero + 1
+                    });
+                    setModalIndex(2)
+                };
+                return zeroWin();
+            };
+            if (nextMove === 8 && !status.includes(arr.xWin) && !status.includes(arr.zeroWin)) {
+                const ties = () => {
+                    setScore({
+                        ...score,
+                        ties: score.ties + 1
+                    });
+                    setModalIndex(3)
+                };
+                return ties()
             };
         };
     }, [nextMove, scenarious, score]);
 
-
-    function handleNextRound(e) {
+    const handleNextRound = (e) => {
         e.preventDefault();
         setModalIndex(0);
         setStatus(initialStatus);
@@ -144,22 +154,37 @@ const Board = (src) => {
         cpuStoppedRef.current = false;
     };
 
-    function handleIndexX() {
+    const handleIndexX = () => {
         if (gameMode === "vsPlayer") {
             return pickIndex === "x" ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!"
-        } else if (gameMode === "vsCPU") {
+        };
+        if (gameMode === "vsCPU") {
             return pickIndex === "x" ? "YOU WON!" : "OH NO, YOU LOST..."
         };
     };
 
-    function handleIndexZero() {
+    const handleIndexZero = () => {
         if (gameMode === "vsPlayer") {
             return pickIndex === "zero" ? "PLAYER 1 WINS!" : "PLAYER 2 WINS!"
-        } else if (gameMode === "vsCPU") {
+        };
+        if (gameMode === "vsCPU") {
             return pickIndex === "zero" ? "YOU WON!" : "OH NO, YOU LOST..."
         };
     };
 
+    const handleOpenRestart = (e) => {
+        e.preventDefault();
+        setModalIndex(4);
+    };
+
+    const handleSubmitRestart = (e) => {
+        e.preventDefault();
+        setModalIndex(0);
+    };
+
+    const handleCloseQuote = () => {
+        setModalIndex(0)
+    }
 
     // used for preserving scores when refreshing page
     useEffect(() => {
@@ -187,7 +212,7 @@ const Board = (src) => {
 
     // CPU actions---------------------
 
-    function getRandomWithExclude(input) {
+    const getRandomWithExclude = (input) => {
         const randNumber = Math.floor(Math.random() * (9 - input.length));
         return randNumber + input.sort((a, b) => a - b).reduce((acc, element) => {
             return randNumber >= element - acc ? acc + 1 : acc
@@ -244,25 +269,27 @@ const Board = (src) => {
             || (nStat[a] === cpu && nStat[c] === cpu && nStat[b] !== manual)
             || (nStat[b] === cpu && nStat[c] === cpu && nStat[a] !== manual)) {
             if (nStat[a] === cpu && nStat[b] === cpu) {
-                cpuActiveClicker(c);
-            } else if (nStat[a] === cpu && nStat[c] === cpu) {
-                cpuActiveClicker(b);
-            } else if (nStat[b] === cpu && nStat[c] === cpu) {
-                cpuActiveClicker(a);
+                return cpuActiveClicker(c);
+            };
+            if (nStat[a] === cpu && nStat[c] === cpu) {
+                return cpuActiveClicker(b);
+            };
+            if (nStat[b] === cpu && nStat[c] === cpu) {
+                return cpuActiveClicker(a);
             };
         };
     }, [cpuActiveClicker, nStat]);
 
     // used for running CPU actions
     useEffect(() => {
-        function handleAttack() {
+        const handleAttack = () => {
             for (let item of scenarious) {
                 const [A, B, C] = item;
                 pickIndex === "x" ? cpuActive(A, B, C, arr.clickX, arr.clickZero) : cpuActive(A, B, C, arr.clickZero, arr.clickX);
             };
         };
 
-        function handleDefence() {
+        const handleDefence = () => {
             for (let item of scenarious) {
                 const [A, B, C] = item;
                 pickIndex === "x" ? cpuActive(A, B, C, arr.clickZero, arr.clickX) : cpuActive(A, B, C, arr.clickX, arr.clickZero);
@@ -272,14 +299,22 @@ const Board = (src) => {
         let timer = setTimeout(() => {
             if (modalIndex === 0 && gameMode === "vsCPU" && !status.includes(arr.xWin) && !status.includes(arr.zeroWin) && excludeArray.length < 9) {
                 if (levelRef.current === "beginner") {
-                    handleCpuRandom();
-                } else if (levelRef.current === "intermediate") {
-                    handleDefence();
-                    handleCpuRandom();
-                } else if (levelRef.current === "advanced") {
-                    handleAttack();
-                    handleDefence();
-                    handleCpuRandom();
+                    return handleCpuRandom();
+                };
+                if (levelRef.current === "intermediate") {
+                    const defence = () => {
+                        handleDefence();
+                        handleCpuRandom()
+                    };
+                    return defence();
+                }
+                if (levelRef.current === "advanced") {
+                    const attack = () => {
+                        handleAttack();
+                        handleDefence();
+                        handleCpuRandom()
+                    };
+                    return attack();
                 };
             };
         }, 500)
@@ -307,7 +342,7 @@ const Board = (src) => {
                     <img src={src} alt="" />
                     <span>TURN</span>
                 </div>
-                <form onSubmit={(e) => { e.preventDefault(); setModalIndex(4) }} className={styles.restart} action="" >
+                <form onSubmit={handleOpenRestart} className={styles.restart} action="" >
                     <button className={styles.restart}><img src="/starter-code/assets/icon-restart.svg" alt="" /></button>
                 </form>
                 {initialStatus.map((item, index) =>
@@ -337,9 +372,9 @@ const Board = (src) => {
                 roundTied={true}
             />}
             {modalIndex === 4 && <ModalRestart
-                onShow={(e) => { e.preventDefault(); setModalIndex(0) }}
+                onShow={handleSubmitRestart}
             />}
-            {modalIndex === 5 && <ModalQuotes onClick={() => setModalIndex(0)} />}
+            {modalIndex === 5 && <ModalQuotes onClick={handleCloseQuote} />}
         </>
     );
 };

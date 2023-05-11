@@ -6,7 +6,8 @@ const Counter = ({ classTitle, scoreX, scoreZero, scoreTies }) => {
     const { state } = useLocation();
     const { pickIndex } = state || {};
     const { gameMode } = state || {};
-    function handleRoleX() {
+
+    const handleRoleX = () => {
         if (pickIndex === "x") {
             return gameMode === "vsCPU" ? "(YOU)" : "(P1)";
         } else if (pickIndex === "zero") {
@@ -14,7 +15,7 @@ const Counter = ({ classTitle, scoreX, scoreZero, scoreTies }) => {
         };
     };
 
-    function handleRoleZero() {
+    const handleRoleZero = () => {
         if (pickIndex === "x") {
             return gameMode === "vsCPU" ? "(CPU)" : "(P2)";
         } else if (pickIndex === "zero") {

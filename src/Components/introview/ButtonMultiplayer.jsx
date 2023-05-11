@@ -1,14 +1,13 @@
 import React from 'react';
 
-const ButtonMultiplayer = ({ value, className, disabled, onClick }) => {
+const ButtonMultiplayer = ({ className, disabled, onClick }) => {
     return (
-        <input
+        <button
             className={className}
             type={'submit'}
-            value={value}
             disabled={disabled}
             onClick={onClick}
-        />
+        >NEW GAME VS PLAYER</button>
     );
 };
 

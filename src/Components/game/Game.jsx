@@ -26,7 +26,7 @@ function getSessionStorage(key, defValue) {
     return JSON.parse(result);
 };
 
-const Board = (src) => {
+const Game = (src) => {
     const initialStatus = Array(9).fill(arr.empty);
     const [status, setStatus] = useState(initialStatus);
     const [score, setScore] = useState({ x: getSessionStorage("saveX", 0), ties: getSessionStorage("saveTies", 0), zero: getSessionStorage("saveZero", 0) });
@@ -379,4 +379,4 @@ const Board = (src) => {
     );
 };
 
-export default Board;
+export default Game;
